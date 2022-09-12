@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <body></body>
+    <body>
+        <table id="reversi"></table>
+    </body>
 </html>
 <script src="reversi.js"></script>
 <script>
 
 let game = new Reversi();
-show(game.board)
-game.choose(6,4);
-show(game.board)
+show(game.board);
 
 
 
 function show(board) {
     let table = document.createElement("table");
     table.className = "board";
+    table.id = "reversi";
     let x = 8;
     let y = 8;
     for (let iy = 0; iy < y; iy++) {
@@ -26,12 +27,16 @@ function show(board) {
             let div = document.createElement("div");
             div.className = "board s"+board[iy*x+ix];
             div.innerHTML = `${ix+1},${iy+1}`
+            div.onclick = function() {
+                game.choose(ix+1,iy+1);
+                show(game.board);
+            }
             td.appendChild(div);
             tr.appendChild(td);
         }
         table.appendChild(tr);
     }
-    document.getElementsByTagName("body")[0].appendChild(table);
+    document.getElementById("reversi").replaceWith(table);
 }
 
 
@@ -44,7 +49,12 @@ function show(board) {
     td.board {
         background-color: rgb(84, 176, 41);
     }
+    td.board:hover {
+        background-color: rgb(89, 140, 65);
+    }
     div.board {
+        color: rgba(0, 0, 0, 0);
+        margin: 2px;
         height: 50px;
         width: 50px;
         border-radius: 25px;
