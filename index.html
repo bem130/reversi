@@ -7,9 +7,8 @@
 
 let game = new Reversi();
 show(game.board)
-console.log(game.board);
-game.choose(5,6);
-
+game.choose(6,4);
+show(game.board)
 
 
 
@@ -26,6 +25,7 @@ function show(board) {
             td.className = "board";
             let div = document.createElement("div");
             div.className = "board s"+board[iy*x+ix];
+            div.innerHTML = `${ix+1},${iy+1}`
             td.appendChild(div);
             tr.appendChild(td);
         }

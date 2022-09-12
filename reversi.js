@@ -15,41 +15,47 @@ class Reversi {
     }
     choose(x,y) {
         console.log(`player${this.nextplayer} chose the ${[x,y]}`);
-        this.search(x,y,this.nextplayer);
+        let torevers = this.search(x,y,this.nextplayer);
+        this.set(x,y,this.nextplayer);
+        for (let cell of torevers) {
+            console.log(cell)
+            this.set(cell[0],cell[1],this.nextplayer);
+        }
+        this.nextplayer = this.gnextplayer();
     }
     search(x,y,player) {
-        x--;y--;
         let reversal = [];
         let leftreversal = [];let toleftr = true; // 左方向
-        for (let sx=x;sx>=0;sx++) {
+        for (let sx=x-1;sx>=0;sx--) {
             if (this.get(sx,y)==0) {toleftr = false;break;}
             else if (this.get(sx,y)==player) {break;}
-            else {leftreversal.push(sx,y);}
+            else {leftreversal.push([sx,y]);}
         }
-        if (toleftr) {reversal.concat(toleftr);}
+        if (toleftr) {reversal=reversal.concat(leftreversal);}
         let rightreversal = [];let torightr = true; // 右方向
         for (let sx=x;sx<8;sx++) {
             if (this.get(sx,y)==0) {torightr = false;break;}
             else if (this.get(sx,y)==player) {break;}
-            else {rightreversal.push(sx,y);}
+            else {rightreversal.push([sx,y]);}
         }
-        if (torightr) {reversal.concat(torightr);}
+        if (torightr) {reversal=reversal.concat(rightreversal);}
         let topreversal = [];let totopr = true; // 上方向
-        for (let sy=y;sy>=0;sy++) {
+        for (let sy=y-1;sy>=0;sy--) {
             if (this.get(x,sy)==0) {totopr = false;break;}
             else if (this.get(x,sy)==player) {break;}
-            else {topreversal.push(x,sy);}
+            else {topreversal.push([x,sy]);}
         }
-        if (totopr) {reversal.concat(totopr);}
+        if (totopr) {reversal=reversal.concat(topreversal);}
         let bottomreversal = [];let tobottomr = true; // 下方向
         for (let sy=y;sy<8;sy++) {
             if (this.get(x,sy)==0) {tobottomr = false;break;}
             else if (this.get(x,sy)==player) {break;}
-            else {bottomreversal.push(x,sy);}
+            else {bottomreversal.push([x,sy]);}
         }
-        if (tobottomr) {reversal.concat(tobottomr);}
+        if (tobottomr) {reversal=reversal.concat(bottomreversal);}
 
         console.log(reversal);
+        return reversal;
     }
     gnextplayer() {
         if (this.nextplayer==1) {
@@ -59,7 +65,14 @@ class Reversi {
             return 1;
         }
     }
-    changeturn() {
-        this.nextplayer = this.gnextplayer();
+    getarr() {
+        let arr = [];
+        for (let iy = 0; iy < 8; iy++) {
+            arr.push([]);
+            for (let ix = 0; ix < 8; ix++) {
+                arr[iy][ix] = this.board[iy*8+ix];
+            }
+        }
+        return arr;
     }
 }
