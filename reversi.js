@@ -1,16 +1,13 @@
 class Reversi {
-    constructor() {
-        this.board = new Uint8ClampedArray(8*8).fill(0);
+    constructor() { // 盤面の初期化
         this.nextplayer = 1;
-        this.set(4,4,1);
-        this.set(4,5,2);
-        this.set(5,4,2);
-        this.set(5,5,1);
+        this.board = new Uint8ClampedArray(8*8).fill(0);
+        this.set(4,4,1);this.set(4,5,2);this.set(5,4,2);this.set(5,5,1);
     }
-    set(x,y,player) {
+    set(x,y,player) { // マスの設定
         this.board[8*(y-1)+x-1] = player;
     }
-    get(x,y) {
+    get(x,y) { // マスの取得
         return this.board[8*(y-1)+x-1];
     }
     choose(x,y) {
@@ -28,7 +25,7 @@ class Reversi {
             console.error("can't choose the cell");
         }
     }
-    search(x,y,player) {
+    search(x,y,player) { // ひっくり返すマスの取得
         let reversal = [];
         if (this.board[y*8+x]==1||this.board[y*8+x]==2) {return reversal;}
         let leftreversal = [];let toleftr = true; // 左方向
@@ -64,7 +61,7 @@ class Reversi {
     gnextplayer() {
         if (this.nextplayer==1) {return 2;} return 1;
     }
-    getarr() {
+    getarr() { // 盤面を2次元配列で取得
         let arr = [];
         for (let iy = 0; iy < 8; iy++) {
             arr.push([]);
