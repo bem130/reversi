@@ -8,6 +8,9 @@ class Reversi {
         this.board[8*(y-1)+x-1] = player;
     }
     get(x,y) { // マスの取得
+        if (x<1||x>8||y<1||y>8) {
+            return false;
+        }
         return this.board[8*(y-1)+x-1];
     }
     choose(x,y) {
@@ -27,7 +30,7 @@ class Reversi {
     }
     search(x,y,player) { // ひっくり返すマスの取得
         let reversal = [];
-        if (this.board[y*8+x]==1||this.board[y*8+x]==2) {return reversal;}
+        if (this.get(x,y)==1||this.get(x,y)==2) {return reversal;}
         let leftreversal = [];let toleftr = true; // 左方向
         for (let sx=x-1;sx>=0;sx--) {
             if (this.get(sx,y)==0) {toleftr = false;break;}
@@ -37,21 +40,21 @@ class Reversi {
         if (toleftr) {reversal=reversal.concat(leftreversal);}
         let rightreversal = [];let torightr = true; // 右方向
         for (let sx=x+1;sx<8;sx++) {
-            if (this.get(sx,y)==0) {torightr = false;break;}
+            if (this.get(sx,y)==0||this.get(sx,y)==false) {torightr = false;break;}
             else if (this.get(sx,y)==player) {break;}
             else {rightreversal.push([sx,y]);}
         }
         if (torightr) {reversal=reversal.concat(rightreversal);}
         let topreversal = [];let totopr = true; // 上方向
         for (let sy=y-1;sy>=0;sy--) {
-            if (this.get(x,sy)==0) {totopr = false;break;}
+            if (this.get(x,sy)==0||this.get(x,sy)==false) {totopr = false;break;}
             else if (this.get(x,sy)==player) {break;}
             else {topreversal.push([x,sy]);}
         }
         if (totopr) {reversal=reversal.concat(topreversal);}
         let bottomreversal = [];let tobottomr = true; // 下方向
         for (let sy=y+1;sy<8;sy++) {
-            if (this.get(x,sy)==0) {tobottomr = false;break;}
+            if (this.get(x,sy)==0||this.get(x,sy)==false) {tobottomr = false;break;}
             else if (this.get(x,sy)==player) {break;}
             else {bottomreversal.push([x,sy]);}
         }
@@ -70,5 +73,25 @@ class Reversi {
             }
         }
         return arr;
+    }
+    getselectable() { // 次選択可能なマスを探す
+        let selectable = [];
+        for (let iy = 1; iy < 9; iy++) {
+            for (let ix = 1; ix < 9; ix++) {
+                if (this.search(ix,iy,this.nextplayer).length) {
+                    selectable.push((iy-1)*8+ix-1);
+                }
+            }
+        }
+        return selectable;
+    }
+    getsearch(x,y) {
+        let sres = this.search(x+1,y+1,this.nextplayer);
+        let res = [];
+        for (let i=0;i<sres.length;i++) {
+            res.push((sres[i][1]-1)*8+sres[i][0]-1)
+        }
+        console.log(sres)
+        return res;
     }
 }

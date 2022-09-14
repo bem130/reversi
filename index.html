@@ -8,11 +8,10 @@
 <script>
 
 let game = new Reversi();
-show(game.board);
+show(game.board,game.getselectable());
 
 
-
-function show(board) {
+function show(board,selectable=[],treverse=[]) {
     let table = document.createElement("table");
     table.className = "board";
     table.id = "reversi";
@@ -26,11 +25,23 @@ function show(board) {
             td.className = "board";
             let div = document.createElement("div");
             div.className = "board s"+board[iy*x+ix];
-            div.innerHTML = `${ix+1},${iy+1}`
             div.onclick = function() {
                 game.choose(ix+1,iy+1);
-                show(game.board);
+                show(game.board,game.getselectable(),game.getsearch(ix,iy));
             }
+            div.onmousemove = function() {
+                show(game.board,game.getselectable(),game.getsearch(ix,iy));
+            }
+            let mark = document.createElement("div");
+            mark.className = "board mark";
+            mark.innerHTML = `${ix+1},${iy+1}`
+            if (selectable.indexOf(iy*x+ix)!=-1) {
+                mark.className = "board mark selectable";
+            }
+            else if (treverse.indexOf(iy*x+ix)!=-1) {
+                mark.className = "board mark treverse";
+            }
+            div.appendChild(mark);
             td.appendChild(div);
             tr.appendChild(td);
         }
@@ -52,9 +63,15 @@ function show(board) {
     td.board:hover {
         background-color: rgb(89, 140, 65);
     }
+    td.board:active {
+        background-color: rgb(74, 113, 57);
+    }
+    td.board {
+        padding: 3px;
+    }
     div.board {
         color: rgba(0, 0, 0, 0);
-        margin: 2px;
+        margin: 0px;
         height: 50px;
         width: 50px;
         border-radius: 25px;
@@ -64,5 +81,19 @@ function show(board) {
     }
     div.board.s2 {
         background-color: rgb(0, 0, 0);
+    }
+    div.board.mark {
+        position: absolute;
+        color: rgba(0, 0, 0, 0);
+        margin: calc(25px - 5px);
+        height: 10px;
+        width: 10px;
+        border-radius: 5px;
+    }
+    div.board.mark.selectable {
+        background-color: rgb(182, 32, 32);
+    }
+    div.board.mark.treverse {
+        background-color: rgb(4, 0, 255);
     }
 </style>
