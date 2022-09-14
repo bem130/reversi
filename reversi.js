@@ -17,19 +17,15 @@ class Reversi {
         if (torevers.length>0) {
             this.set(x,y,this.nextplayer);
             for (let cell of torevers) {
-                console.log(cell)
                 this.set(cell[0],cell[1],this.nextplayer);
             }
             this.nextplayer = this.gnextplayer();
         }
-        else {
-            console.error("can't choose the cell");
-        }
+        else {console.error("can't choose the cell");}
     }
     search(x,y,player) { // ひっくり返すマスの取得
         this.reversal = [];
-        if (this.get(x,y)==1||this.get(x,y)==2) {return this.reversal;}
-
+        if (!this.get(x,y)==0) {return this.reversal;}
         this.searchf(x,y,1,0,player);
         this.searchf(x,y,0,1,player);
         this.searchf(x,y,-1,0,player);
@@ -38,14 +34,13 @@ class Reversi {
         this.searchf(x,y,1,-1,player);
         this.searchf(x,y,-1,1,player);
         this.searchf(x,y,-1,-1,player);
-
         return this.reversal;
     }
     searchf(x,y,rx,ry,player) { // 単一方向のひっくり返すマスの取得
         let treversal = [];
         for (let s=1;s<8;s++) {
             if (this.get(rx*s+x,ry*s+y)==0||this.get(rx*s+x,ry*s+y)==false) {break;}
-            else if (this.get(rx*s+x,ry*s+y)==player) {this.reversal=this.reversal.concat(treversal);;break;}
+            else if (this.get(rx*s+x,ry*s+y)==player) {this.reversal=this.reversal.concat(treversal);break;}
             else {treversal.push([rx*s+x,ry*s+y]);}
         }
     }
