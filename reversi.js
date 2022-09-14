@@ -29,6 +29,8 @@ class Reversi {
     search(x,y,player) { // ひっくり返すマスの取得
         let reversal = [];
         if (this.get(x,y)==1||this.get(x,y)==2) {return reversal;}
+        let treversal = [];let trr = false; // 右下
+
         let leftreversal = [];let toleftr = false; // 左方向
         for (let sx=x-1;sx>=0;sx--) {
             if (this.get(sx,y)==0||this.get(sx,y)==false) {break;}
@@ -57,6 +59,36 @@ class Reversi {
             else {bottomreversal.push([x,sy]);}
         }
         if (tobottomr) {reversal=reversal.concat(bottomreversal);}
+
+        treversal = [];trr = false; // 右下
+        for (let s=1;s<8;s++) {
+            if (this.get(s+x,s+y)==0||this.get(s+x,s+y)==false) {break;}
+            else if (this.get(s+x,s+y)==player) {trr = true;break;}
+            else {treversal.push([s+x,s+y]);}
+        }
+        if (trr) {reversal=reversal.concat(treversal);}
+        treversal = [];trr = false; // 左下
+        for (let s=1;s<8;s++) {
+            if (this.get(-s+x,s+y)==0||this.get(-s+x,s+y)==false) {break;}
+            else if (this.get(-s+x,s+y)==player) {trr = true;break;}
+            else {treversal.push([-s+x,s+y]);}
+        }
+        if (trr) {reversal=reversal.concat(treversal);}
+        treversal = [];trr = false; // 右上
+        for (let s=1;s<8;s++) {
+            if (this.get(s+x,-s+y)==0||this.get(s+x,-s+y)==false) {break;}
+            else if (this.get(s+x,-s+y)==player) {trr = true;break;}
+            else {treversal.push([s+x,-s+y]);}
+        }
+        if (trr) {reversal=reversal.concat(treversal);}
+        treversal = [];trr = false; // 左上
+        for (let s=1;s<8;s++) {
+            if (this.get(-s+x,-s+y)==0||this.get(-s+x,-s+y)==false) {break;}
+            else if (this.get(-s+x,-s+y)==player) {trr = true;break;}
+            else {treversal.push([-s+x,-s+y]);}
+        }
+        if (trr) {reversal=reversal.concat(treversal);}
+
         return reversal;
     }
     gnextplayer() {
