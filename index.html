@@ -34,7 +34,6 @@ function show(board,selectable=[],treverse=[]) {
             }
             let mark = document.createElement("div");
             mark.className = "board mark";
-            mark.innerHTML = `${ix+1},${iy+1}`
             if (selectable.indexOf(iy*x+ix)!=-1) {
                 mark.className = "board mark selectable";
             }
@@ -56,6 +55,11 @@ function show(board,selectable=[],treverse=[]) {
     .board {
         margin: 0px;
         padding: 0px;
+    }
+    table.board {
+        background-color: rgb(0, 0, 0);
+        border: 5px solid rgb(83, 110, 138);
+        border-radius: 5px;
     }
     td.board {
         background-color: rgb(84, 176, 41);
@@ -94,6 +98,6 @@ function show(board,selectable=[],treverse=[]) {
         background-color: rgb(182, 32, 32);
     }
     div.board.mark.treverse {
-        background-color: rgb(4, 0, 255);
+        background-color: rgb(103, 101, 233);
     }
 </style>
