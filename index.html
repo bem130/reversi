@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <table id="reversi"></table>
+        <div id="rarea">
+            <table id="reversi"></table>
+        </div>
     </body>
 </html>
 <script src="reversi.js"></script>
@@ -52,8 +54,20 @@ function show(board,selectable=[],treverse=[]) {
 
 </script>
 <style>
+    body {
+        background-color: rgb(215, 152, 75);
+    }
+    #rarea {
+        background-color: rgb(235, 223, 116);
+        padding: 1px;
+        border-radius: 5px;
+        position: absolute;
+        top: 0;right: 0;bottom: 0;left: 0;
+        margin: auto;
+        height: fit-content;
+        width: fit-content;
+    }
     .board {
-        margin: 0px;
         padding: 0px;
     }
     table.board {
