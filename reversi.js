@@ -8,9 +8,7 @@ class Reversi {
         this.board[8*(y-1)+x-1] = player;
     }
     get(x,y) { // マスの取得
-        if (x<1||x>8||y<1||y>8) {
-            return false;
-        }
+        if (x<1||x>8||y<1||y>8) {return false;}
         return this.board[8*(y-1)+x-1];
     }
     choose(x,y) {
@@ -31,31 +29,31 @@ class Reversi {
     search(x,y,player) { // ひっくり返すマスの取得
         let reversal = [];
         if (this.get(x,y)==1||this.get(x,y)==2) {return reversal;}
-        let leftreversal = [];let toleftr = true; // 左方向
+        let leftreversal = [];let toleftr = false; // 左方向
         for (let sx=x-1;sx>=0;sx--) {
-            if (this.get(sx,y)==0) {toleftr = false;break;}
-            else if (this.get(sx,y)==player) {break;}
+            if (this.get(sx,y)==0||this.get(sx,y)==false) {break;}
+            else if (this.get(sx,y)==player) {toleftr = true;break;}
             else {leftreversal.push([sx,y]);}
         }
         if (toleftr) {reversal=reversal.concat(leftreversal);}
-        let rightreversal = [];let torightr = true; // 右方向
+        let rightreversal = [];let torightr = false; // 右方向
         for (let sx=x+1;sx<8;sx++) {
-            if (this.get(sx,y)==0||this.get(sx,y)==false) {torightr = false;break;}
-            else if (this.get(sx,y)==player) {break;}
+            if (this.get(sx,y)==0||this.get(sx,y)==false) {break;}
+            else if (this.get(sx,y)==player) {torightr = true;break;}
             else {rightreversal.push([sx,y]);}
         }
         if (torightr) {reversal=reversal.concat(rightreversal);}
-        let topreversal = [];let totopr = true; // 上方向
+        let topreversal = [];let totopr = false; // 上方向
         for (let sy=y-1;sy>=0;sy--) {
-            if (this.get(x,sy)==0||this.get(x,sy)==false) {totopr = false;break;}
-            else if (this.get(x,sy)==player) {break;}
+            if (this.get(x,sy)==0||this.get(x,sy)==false) {break;}
+            else if (this.get(x,sy)==player) {totopr = true;break;}
             else {topreversal.push([x,sy]);}
         }
         if (totopr) {reversal=reversal.concat(topreversal);}
-        let bottomreversal = [];let tobottomr = true; // 下方向
+        let bottomreversal = [];let tobottomr = false; // 下方向
         for (let sy=y+1;sy<8;sy++) {
-            if (this.get(x,sy)==0||this.get(x,sy)==false) {tobottomr = false;break;}
-            else if (this.get(x,sy)==player) {break;}
+            if (this.get(x,sy)==0||this.get(x,sy)==false) {break;}
+            else if (this.get(x,sy)==player) {tobottomr = true;break;}
             else {bottomreversal.push([x,sy]);}
         }
         if (tobottomr) {reversal=reversal.concat(bottomreversal);}
@@ -89,9 +87,8 @@ class Reversi {
         let sres = this.search(x+1,y+1,this.nextplayer);
         let res = [];
         for (let i=0;i<sres.length;i++) {
-            res.push((sres[i][1]-1)*8+sres[i][0]-1)
+            res.push((sres[i][1]-1)*8+sres[i][0]-1);
         }
-        console.log(sres)
         return res;
     }
 }
