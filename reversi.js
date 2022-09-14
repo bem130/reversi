@@ -47,16 +47,6 @@ class Reversi {
     gnextplayer() {
         if (this.nextplayer==1) {return 2;} return 1;
     }
-    getarr() { // 盤面を2次元配列で取得
-        let arr = [];
-        for (let iy = 0; iy < 8; iy++) {
-            arr.push([]);
-            for (let ix = 0; ix < 8; ix++) {
-                arr[iy][ix] = this.board[iy*8+ix];
-            }
-        }
-        return arr;
-    }
     getselectable() { // 次選択可能なマスを探す
         let selectable = [];
         for (let iy = 1; iy < 9; iy++) {
