@@ -41,6 +41,11 @@ function show(board,selectable=[],treverse=[]) {
             let fchoose = function() {
                 game.choose(ix+1,iy+1);
                 show(game.board,game.getselectable(),game.getsearch(ix,iy));
+
+                if (game.getselectable().length==0) {
+                    game.nextplayer = game.gnextplayer();
+                }
+                
             }
             div.onclick = fchoose;
             div.ontouchend = fchoose;
