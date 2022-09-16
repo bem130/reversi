@@ -27,10 +27,12 @@ function show(board,selectable=[],treverse=[]) {
             td.className = "board";
             let div = document.createElement("div");
             div.className = "board s"+board[iy*x+ix];
-            div.onclick = function() {
+            let fchoose = function() {
                 game.choose(ix+1,iy+1);
                 show(game.board,game.getselectable(),game.getsearch(ix,iy));
             }
+            div.onclick = fchoose;
+            div.ontouchend = fchoose;
             div.onmousemove = function() {
                 show(game.board,game.getselectable(),game.getsearch(ix,iy));
             }
