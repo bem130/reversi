@@ -66,4 +66,17 @@ class Reversi {
         }
         return res;
     }
+    count() {
+        let p1 = 0;
+        let p2 = 0;
+        for (let i=0;i<this.board.length;i++) {
+            if (this.board[i]==1) {
+                p1++;
+            }
+            if (this.board[i]==2) {
+                p2++;
+            }
+        }
+        return [p1,p2];
+    }
 }
